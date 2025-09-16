@@ -13,6 +13,15 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        heading: ['Poppins', 'Inter', 'system-ui', 'sans-serif'],
+      },
+      backgroundImage: {
+        'gradient-primary': 'var(--gradient-primary)',
+        'gradient-accent': 'var(--gradient-accent)',
+        'gradient-subtle': 'var(--gradient-subtle)',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -46,6 +55,15 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        // Biztra Brand Colors
+        "biztra-blue": {
+          DEFAULT: "hsl(var(--biztra-blue))",
+          light: "hsl(var(--biztra-blue-light))",
+        },
+        "biztra-orange": {
+          DEFAULT: "hsl(var(--biztra-orange))",
+          light: "hsl(var(--biztra-orange-light))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
