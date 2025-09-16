@@ -2,32 +2,46 @@ name: Deploy to Namecheap cPanel
 
 on:
   push:
-    branches: [ main ]  # or your main branch
+    branches: [ main ]         # change if your default branch differs
+  workflow_dispatch: {}        # allow manual runs
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
-      # Build step (only if React/Next/Vite)
+      # Build Vite (outputs to dist/)
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
       - run: npm ci
       - run: npm run build
-      - run: |
-          npm run export || echo "No export step"
 
-      # Pick build directory
+      # Pick build directory (dist/out/build fallback)
       - id: pick
         run: |
-          for d in out dist build; do
+          for d in dist out build; do
             if [ -d "$d" ]; then echo "dir=$d" >> $GITHUB_OUTPUT; exit 0; fi
           done
-          echo "dir=." >> $GITHUB_OUTPUT
+          echo "dir=dist" >> $GITHUB_OUTPUT
 
-      # Deploy via SSH/SCP
+      # Optional: quick SSH sanity check (helps catch bad host/port/key)
+      - name: Prepare SSH key & test
+        env:
+          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          HOST: ${{ secrets.SSH_HOST }}
+          PORT: ${{ secrets.SSH_PORT }}
+          USER: ${{ secrets.SSH_USER }}
+          PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
+        run: |
+          echo "$KEY" > id_rsa
+          chmod 600 id_rsa
+          ssh -o StrictHostKeyChecking=no -i id_rsa -p "$PORT" "$USER@$HOST" "echo ok"
+
+      # Deploy via SCP (uploads build folder to public_html)
       - name: Deploy files
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -38,3 +52,4 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           source: "${{ steps.pick.outputs.dir }}/"
           target: "${{ secrets.REMOTE_PATH }}"
+          overwrite: true
