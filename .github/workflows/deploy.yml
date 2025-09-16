@@ -1,0 +1,40 @@
+name: Deploy to Namecheap cPanel
+
+on:
+  push:
+    branches: [ main ]  # or your main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Build step (only if React/Next/Vite)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm run build
+      - run: |
+          npm run export || echo "No export step"
+
+      # Pick build directory
+      - id: pick
+        run: |
+          for d in out dist build; do
+            if [ -d "$d" ]; then echo "dir=$d" >> $GITHUB_OUTPUT; exit 0; fi
+          done
+          echo "dir=." >> $GITHUB_OUTPUT
+
+      # Deploy via SSH/SCP
+      - name: Deploy files
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          source: "${{ steps.pick.outputs.dir }}/"
+          target: "${{ secrets.REMOTE_PATH }}"
