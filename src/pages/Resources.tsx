@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { ArrowRight, FileText, Download, BookOpen, Video, Calendar, Search } from "lucide-react";
+import { ArrowRight, FileText, Download, BookOpen, Video, Calendar, Search, Play, Monitor, HelpCircle, FileSpreadsheet, Presentation, Image, ExternalLink } from "lucide-react";
 
 const Resources = () => {
   const featuredResources = [
@@ -14,7 +14,8 @@ const Resources = () => {
       description: "Comprehensive guide covering ERP implementation strategies, automation benefits, and ROI analysis for manufacturing organizations.",
       downloadSize: "2.3 MB PDF",
       icon: FileText,
-      featured: true
+      featured: true,
+      downloadUrl: "/downloads/digital-transformation-guide.pdf"
     },
     {
       type: "Case Study",
@@ -22,7 +23,8 @@ const Resources = () => {
       description: "Detailed analysis of a major manufacturing company's transformation journey with Biztra PrintOps ERP implementation.",
       downloadSize: "1.8 MB PDF",
       icon: Download,
-      featured: true
+      featured: true,
+      downloadUrl: "/downloads/printops-case-study.pdf"
     },
     {
       type: "Product Brochure",
@@ -30,8 +32,66 @@ const Resources = () => {
       description: "Complete overview of all ERP modules, features, benefits, and technical specifications in an easy-to-share format.",
       downloadSize: "4.1 MB PDF",
       icon: BookOpen,
-      featured: true
+      featured: true,
+      downloadUrl: "/downloads/biztra-erp-brochure.pdf"
     }
+  ];
+
+  const videoSections = [
+    {
+      category: "Company Profile",
+      videos: [
+        { title: "Biztra Technologies Overview", duration: "3:45", thumbnail: "/api/placeholder/300/200", description: "Introduction to our company vision and mission" },
+        { title: "Leadership Team Introduction", duration: "5:20", thumbnail: "/api/placeholder/300/200", description: "Meet the minds behind Biztra's innovation" },
+        { title: "Our Journey & Milestones", duration: "4:15", thumbnail: "/api/placeholder/300/200", description: "From startup to industry leader" }
+      ]
+    },
+    {
+      category: "Product Demos",
+      videos: [
+        { title: "PrintOps ERP Complete Walkthrough", duration: "12:30", thumbnail: "/api/placeholder/300/200", description: "Full demonstration of our flagship ERP solution" },
+        { title: "HR Module Deep Dive", duration: "8:45", thumbnail: "/api/placeholder/300/200", description: "Comprehensive look at HR management features" },
+        { title: "DMS Features Overview", duration: "6:20", thumbnail: "/api/placeholder/300/200", description: "Document management system capabilities" },
+        { title: "CRM Integration Demo", duration: "7:10", thumbnail: "/api/placeholder/300/200", description: "Customer relationship management in action" }
+      ]
+    },
+    {
+      category: "Help & Training",
+      videos: [
+        { title: "Getting Started with Biztra ERP", duration: "15:30", thumbnail: "/api/placeholder/300/200", description: "Step-by-step onboarding guide" },
+        { title: "User Management & Permissions", duration: "9:15", thumbnail: "/api/placeholder/300/200", description: "Setting up users and role-based access" },
+        { title: "Reporting & Analytics Tutorial", duration: "11:45", thumbnail: "/api/placeholder/300/200", description: "Creating custom reports and dashboards" },
+        { title: "Troubleshooting Common Issues", duration: "8:30", thumbnail: "/api/placeholder/300/200", description: "Solutions to frequently encountered problems" }
+      ]
+    }
+  ];
+
+  const templateCategories = [
+    {
+      category: "Business Templates",
+      items: [
+        { title: "ERP ROI Calculator", type: "Excel", size: "0.5 MB", icon: FileSpreadsheet, description: "Calculate potential returns from ERP implementation" },
+        { title: "Project Implementation Timeline", type: "Excel", size: "0.3 MB", icon: FileSpreadsheet, description: "Template for planning your ERP rollout" },
+        { title: "Digital Transformation Roadmap", type: "PowerPoint", size: "2.1 MB", icon: Presentation, description: "Strategic planning presentation template" },
+        { title: "Business Process Analysis", type: "Excel", size: "0.8 MB", icon: FileSpreadsheet, description: "Analyze and optimize your current processes" }
+      ]
+    },
+    {
+      category: "Infographics & Visual Assets",
+      items: [
+        { title: "ERP Benefits Infographic", type: "PNG", size: "1.2 MB", icon: Image, description: "Visual representation of ERP advantages" },
+        { title: "Manufacturing Process Flow", type: "PNG", size: "0.9 MB", icon: Image, description: "Streamlined manufacturing workflow diagram" },
+        { title: "Digital Transformation Stats", type: "PNG", size: "1.1 MB", icon: Image, description: "Key statistics about digital transformation" },
+        { title: "Biztra Solutions Overview", type: "PNG", size: "1.5 MB", icon: Image, description: "Complete solutions portfolio visual" }
+      ]
+    }
+  ];
+
+  const portalResources = [
+    { title: "Client Portal", description: "Access your projects, reports, and support tickets", icon: Monitor },
+    { title: "Training Portal", description: "Self-paced learning modules and certification paths", icon: BookOpen },
+    { title: "Developer Resources", description: "API documentation, SDKs, and integration guides", icon: FileText },
+    { title: "Support Center", description: "Knowledge base, FAQs, and ticket submission", icon: HelpCircle }
   ];
 
   const resourceCategories = [
@@ -166,12 +226,174 @@ const Resources = () => {
                   <CardContent>
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-gray-500">{resource.downloadSize}</span>
-                      <Button className="btn-primary" asChild>
-                        <Link to="/contact">
-                          Download <Download className="ml-2 h-4 w-4" />
-                        </Link>
+                      <Button className="btn-primary" onClick={() => window.open(resource.downloadUrl, '_blank')}>
+                        Download <Download className="ml-2 h-4 w-4" />
                       </Button>
                     </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Video Sections */}
+      <section className="py-16 lg:py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-biztra-blue mb-4">
+              Video Resources
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Watch our comprehensive video library covering product demos, training materials, 
+              and company insights to help you get the most out of Biztra solutions.
+            </p>
+          </motion.div>
+
+          <div className="space-y-16">
+            {videoSections.map((section, sectionIndex) => (
+              <motion.div
+                key={section.category}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: sectionIndex * 0.1 }}
+              >
+                <h3 className="text-2xl font-heading font-bold text-biztra-blue mb-8">{section.category}</h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {section.videos.map((video, index) => (
+                    <Card key={video.title} className="card-elegant hover:shadow-xl transition-all duration-300 cursor-pointer group">
+                      <div className="relative">
+                        <img 
+                          src={video.thumbnail} 
+                          alt={video.title}
+                          className="w-full h-48 object-cover rounded-t-lg"
+                        />
+                        <div className="absolute inset-0 bg-black/40 rounded-t-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className="bg-white rounded-full p-3">
+                            <Play className="h-8 w-8 text-biztra-blue" fill="currentColor" />
+                          </div>
+                        </div>
+                        <div className="absolute bottom-2 right-2 bg-black/70 text-white text-sm px-2 py-1 rounded">
+                          {video.duration}
+                        </div>
+                      </div>
+                      <CardContent className="p-4">
+                        <h4 className="font-heading font-semibold text-biztra-blue mb-2">{video.title}</h4>
+                        <p className="text-sm text-gray-600">{video.description}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Templates & Downloads */}
+      <section className="py-16 lg:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-biztra-blue mb-4">
+              Free Templates & Tools
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Download our collection of business templates, calculators, and infographics 
+              to streamline your operations and planning processes.
+            </p>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-12">
+            {templateCategories.map((category, index) => (
+              <motion.div
+                key={category.category}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <h3 className="text-2xl font-heading font-bold text-biztra-blue mb-8">{category.category}</h3>
+                <div className="space-y-4">
+                  {category.items.map((item) => (
+                    <Card key={item.title} className="card-elegant hover:shadow-lg transition-all duration-300">
+                      <CardContent className="p-6">
+                        <div className="flex items-start space-x-4">
+                          <div className="p-3 rounded-lg bg-biztra-blue/10 text-biztra-blue">
+                            <item.icon className="h-6 w-6" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between mb-2">
+                              <h4 className="font-heading font-semibold text-biztra-blue">{item.title}</h4>
+                              <div className="flex items-center space-x-2">
+                                <Badge variant="outline">{item.type}</Badge>
+                                <span className="text-xs text-gray-500">{item.size}</span>
+                              </div>
+                            </div>
+                            <p className="text-sm text-gray-600 mb-3">{item.description}</p>
+                            <Button size="sm" className="btn-primary">
+                              Download <Download className="ml-2 h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Portal Access */}
+      <section className="py-16 lg:py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-biztra-blue mb-4">
+              Client Portals & Resources
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Access dedicated portals for ongoing support, training, and project management 
+              tailored to your business needs.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {portalResources.map((portal, index) => (
+              <motion.div
+                key={portal.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <Card className="card-elegant h-full hover:shadow-xl transition-all duration-300 cursor-pointer group">
+                  <CardContent className="p-6 text-center">
+                    <div className="mx-auto w-16 h-16 bg-biztra-blue/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-biztra-blue/20 transition-colors">
+                      <portal.icon className="h-8 w-8 text-biztra-blue" />
+                    </div>
+                    <h3 className="font-heading font-semibold text-biztra-blue mb-2">{portal.title}</h3>
+                    <p className="text-sm text-gray-600 mb-4">{portal.description}</p>
+                    <Button variant="outline" size="sm" className="w-full group-hover:border-biztra-blue group-hover:text-biztra-blue">
+                      Access Portal <ExternalLink className="ml-2 h-4 w-4" />
+                    </Button>
                   </CardContent>
                 </Card>
               </motion.div>
