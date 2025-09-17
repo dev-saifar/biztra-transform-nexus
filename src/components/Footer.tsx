@@ -11,7 +11,7 @@ export const Footer = () => {
             <img 
               src="/assets/biztra-logo-alt.png" 
               alt="Biztra Technologies" 
-              className="h-8 w-auto mb-4 brightness-0 invert"
+              className="h-12 w-auto mb-4 brightness-0 invert"  // changed from h-8 to h-12
             />
             <p className="text-blue-100 mb-4 max-w-md">
               Where Business Meets Transformation. Your trusted partner for enterprise 
@@ -29,7 +29,7 @@ export const Footer = () => {
               </a>
             </div>
           </div>
-
+          
           {/* Quick Links */}
           <div>
             <h4 className="font-semibold mb-4">Solutions</h4>
