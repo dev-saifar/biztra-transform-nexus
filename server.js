@@ -38,8 +38,8 @@ app.post('/api/contact', async (req, res) => {
   
   // Set up nodemailer transporter (configure with your credentials)
   const transporter = nodemailer.createTransport({
-    host: 'smtp.privateemail.com', // Replace with your SMTP host
-    port: 587,
+    host: 'biztrasolutions.com', // Replace with your SMTP host
+    port: 465,
     secure: false, // true for 465, false for other ports
     auth: {
       user: 'info@biztrasolutions.com', // Replace with your SMTP username
