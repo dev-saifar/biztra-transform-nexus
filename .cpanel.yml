@@ -2,5 +2,12 @@
 deployment:
   tasks:
     - set -e
+    - export REPOPATH=/home/biztdaww/repositories/biztra-transform-nexus
     - export DEPLOYPATH=/home/biztdaww/public_html
-    - /usr/bin/rsync -av --delete dist/ $DEPLOYPATH/
+    - /bin/mkdir -p $DEPLOYPATH
+    # debug breadcrumbs so we can see what happened
+    - /bin/echo "Deployed at $(/bin/date)" > $DEPLOYPATH/_deploy.txt
+    - /bin/ls -la $REPOPATH > $DEPLOYPATH/_ls_repo.txt
+    - /bin/ls -la $REPOPATH/dist > $DEPLOYPATH/_ls_dist.txt 2>&1 || true
+    # copy using rsync if available; otherwise use cp
+    - if [ -x /usr/bin/rsync ]; then /usr/bin/rsync -av --delete $REPOPATH/dist/ $DEPLOYPATH/; else /bin/rm -rf $DEPLOYPATH/*; /bin/cp -R $REPOPATH/dist/* $DEPLOYPATH/; fi
